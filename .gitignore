@@ -1,0 +1,9 @@
+.vs/
+packages/
+vipexp/bin/
+vipexp/csx/
+vipexp/obj/
+WebRole1/bin/
+WebRole1/obj/
+WorkerRoleWithSBQueue1/bin/
+WorkerRoleWithSBQueue1/obj/
