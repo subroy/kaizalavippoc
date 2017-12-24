@@ -4,6 +4,7 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -59,7 +60,7 @@ namespace WorkerRoleWithSBQueue1
         {
             try
             {
-                HttpWebRequest resolveip = (HttpWebRequest)WebRequest.Create(CloudConfigurationManager.GetSetting("Microsoft.FunctionApp.ResolveIP"));
+                HttpWebRequest resolveip = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["Microsoft.FunctionApp.ResolveIP"]);
                 resolveip.ContentType = "application/json";
                 resolveip.Method = HttpMethod.Get.Method;
                 HttpWebResponse resolveIPResponse = (HttpWebResponse) resolveip.GetResponse();
@@ -93,7 +94,7 @@ namespace WorkerRoleWithSBQueue1
             ServicePointManager.DefaultConnectionLimit = 12;
 
             // Create the queue if it does not exist already
-            string connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
+            string connectionString = ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"];
             var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
             if (!namespaceManager.QueueExists(QueueName))
             {

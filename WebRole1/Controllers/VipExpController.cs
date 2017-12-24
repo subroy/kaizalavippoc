@@ -3,6 +3,7 @@ using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
 using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -22,7 +23,7 @@ namespace WebRole1.Controller
             if (request != null && !string.IsNullOrWhiteSpace(request.WorkerCallbackUrl))
             {
                 // Create the queue if it does not exist already
-                string connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
+                string connectionString = ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"];
                 var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
                 if (!namespaceManager.QueueExists(QueueName))
                 {
@@ -50,7 +51,7 @@ namespace WebRole1.Controller
             HttpResponseMessage response = new HttpResponseMessage();
             try
             {
-                HttpWebRequest resolveip = (HttpWebRequest)WebRequest.Create(CloudConfigurationManager.GetSetting("Microsoft.FunctionApp.ResolveIP"));
+                HttpWebRequest resolveip = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["Microsoft.FunctionApp.ResolveIP"]);
                 resolveip.ContentType = "application/json";
                 resolveip.Method = HttpMethod.Get.Method;
                 HttpWebResponse resolveIPResponse = (HttpWebResponse)resolveip.GetResponse();
