@@ -1,6 +1,5 @@
 ﻿using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
-using Microsoft.WindowsAzure;
 using Newtonsoft.Json;
 using System;
 using System.Configuration;
